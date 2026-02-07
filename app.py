@@ -8,6 +8,7 @@ from generator import generate_function_docstring, generate_class_docstring
 from inserter import insert_docstrings
 from error_detector import detect_issues
 from comment_generator import generate_inline_comments, insert_inline_comments
+from validator import validate_docstring, validate_class_docstring
 
 # Page config
 st.set_page_config(
@@ -33,6 +34,8 @@ if 'issues' not in st.session_state:
     st.session_state.issues = []
 if 'inline_comments' not in st.session_state:
     st.session_state.inline_comments = []
+if 'validation_results' not in st.session_state:
+    st.session_state.validation_results = {}
 
 # Header
 st.title("📝 Python Docstring Generator")
@@ -79,23 +82,34 @@ if uploaded_file:
         
         # Generate all docstrings with selected style
         docstrings = {}
+        validation_results = {}
         
         for func in file_info.functions:
             if not func.has_docstring:
                 key = f"func_{func.name}_{func.line_number}"
-                docstrings[key] = generate_function_docstring(func, st.session_state.style)
+                docstring = generate_function_docstring(func, st.session_state.style)
+                docstrings[key] = docstring
+                # Validate the generated docstring
+                validation_results[key] = validate_docstring(docstring, st.session_state.style, func)
         
         for cls in file_info.classes:
             if not cls.has_docstring:
                 key = f"class_{cls.name}_{cls.line_number}"
-                docstrings[key] = generate_class_docstring(cls, st.session_state.style)
+                docstring = generate_class_docstring(cls, st.session_state.style)
+                docstrings[key] = docstring
+                # Validate class docstring
+                validation_results[key] = validate_class_docstring(docstring, st.session_state.style, cls)
             
             for method in cls.methods:
                 if not method.has_docstring:
                     key = f"method_{cls.name}.{method.name}_{method.line_number}"
-                    docstrings[key] = generate_function_docstring(method, st.session_state.style)
+                    docstring = generate_function_docstring(method, st.session_state.style)
+                    docstrings[key] = docstring
+                    # Validate method docstring
+                    validation_results[key] = validate_docstring(docstring, st.session_state.style, method)
         
         st.session_state.docstrings = docstrings
+        st.session_state.validation_results = validation_results
         st.session_state.generated = True
     
     # Show results
@@ -154,6 +168,15 @@ if uploaded_file:
                             col1, col2 = st.columns([3, 1])
                             with col1:
                                 st.markdown(f"**{func.name}** (Line {func.line_number})")
+                                # Show validation score
+                                if key in st.session_state.validation_results:
+                                    result = st.session_state.validation_results[key]
+                                    if result.score >= 90:
+                                        st.caption(f"✅ Validation: {result.score}/100 (Excellent)")
+                                    elif result.score >= 70:
+                                        st.caption(f"⚠️ Validation: {result.score}/100 (Good)")
+                                    else:
+                                        st.caption(f"❌ Validation: {result.score}/100 (Needs improvement)")
                             with col2:
                                 if key in st.session_state.accepted:
                                     st.button("✓ Accepted", key=f"btn_{key}", disabled=True, use_container_width=True)
@@ -164,6 +187,13 @@ if uploaded_file:
                             
                             with st.expander("View docstring"):
                                 st.code(st.session_state.docstrings[key], language="text")
+                                # Show validation warnings if any
+                                if key in st.session_state.validation_results:
+                                    result = st.session_state.validation_results[key]
+                                    if result.warnings:
+                                        st.warning("**Validation Warnings:**")
+                                        for warning in result.warnings:
+                                            st.caption(f"⚠️ {warning}")
                         
                         st.markdown("---")
             
