@@ -42,16 +42,19 @@ graph TB
     A[User uploads Python file] --> B[Parser Module]
     B --> C[AST Analysis]
     C --> D[Generator Module]
-    C --> E[Error Detector]
-    C --> F[Comment Generator]
-    D --> G[Docstring Generation]
-    E --> H[Issue Detection]
-    F --> I[Inline Comments]
-    G --> J[Inserter Module]
-    H --> J
-    I --> J
-    J --> K[Enhanced Python File]
-    K --> L[User Download]
+    C --> E[Validator Module]
+    C --> F[Error Detector]
+    C --> G[Comment Generator]
+    D --> H[Docstring Generation]
+    E --> I[Quality Validation]
+    F --> J[Issue Detection]
+    G --> K[Inline Comments]
+    H --> L[Inserter Module]
+    I --> L
+    J --> L
+    K --> L
+    L --> M[Enhanced Python File]
+    M --> N[User Download]
 ```
 
 ### Module Breakdown
@@ -257,12 +260,14 @@ Python-Docstring-Generator/
 ├── models.py                  # Data classes (FunctionInfo, ClassInfo, etc.)
 ├── parser.py                  # AST-based Python code parser
 ├── generator.py               # Multi-style docstring generator
+├── validator.py               # Docstring quality validator
 ├── inserter.py                # Docstring insertion logic
 ├── error_detector.py          # Code issue detection
 ├── comment_generator.py       # Inline comment generation
 ├── sample.py                  # Example Python file for testing
 ├── requirements.txt           # Python dependencies
 ├── README.md                  # This file
+├── architecture_diagram.png   # System architecture diagram
 └── .gitignore                 # Git ignore rules
 ```
 
