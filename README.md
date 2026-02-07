@@ -257,14 +257,12 @@ Python-Docstring-Generator/
 ├── models.py                  # Data classes (FunctionInfo, ClassInfo, etc.)
 ├── parser.py                  # AST-based Python code parser
 ├── generator.py               # Multi-style docstring generator
-├── validator.py               # Docstring quality validator
 ├── inserter.py                # Docstring insertion logic
 ├── error_detector.py          # Code issue detection
 ├── comment_generator.py       # Inline comment generation
 ├── sample.py                  # Example Python file for testing
 ├── requirements.txt           # Python dependencies
 ├── README.md                  # This file
-├── architecture_diagram.png   # System architecture diagram
 └── .gitignore                 # Git ignore rules
 ```
 
