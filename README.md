@@ -204,6 +204,49 @@ Automatically adds comments for:
 - Shows "Already documented" status
 - Skips generation for documented items
 
+### 5. Docstring Validation ⭐ NEW
+
+The validator ensures every generated docstring meets professional standards.
+
+**What it validates:**
+
+- ✅ **PEP 257 Compliance**
+  - Summary line format and punctuation
+  - Blank line after summary (multi-line docstrings)
+  - Proper docstring structure
+
+- ✅ **Format Compliance**
+  - Google style: `Args:` and `Returns:` sections
+  - NumPy style: Dashed section headers
+  - reST style: `:param` and `:returns:` directives
+
+- ✅ **Completeness**
+  - All parameters documented
+  - Return type documented (if applicable)
+  - No missing information
+
+**Quality Scoring (0-100):**
+
+- **90-100**: ✅ Excellent - Production-ready
+- **70-89**: ⚠️ Good - Minor improvements suggested
+- **0-69**: ❌ Needs improvement - Review warnings
+
+**Example Validation Output:**
+
+```
+calculate_area (Line 5)
+✅ Validation: 100/100 (Excellent)
+
+View docstring:
+  """
+  Calculate Area function.
+
+  Args:
+      length: The length parameter.
+      width: The width parameter.
+  """
+```
+
 ---
 
 ## 📁 Project Structure
@@ -214,12 +257,14 @@ Python-Docstring-Generator/
 ├── models.py                  # Data classes (FunctionInfo, ClassInfo, etc.)
 ├── parser.py                  # AST-based Python code parser
 ├── generator.py               # Multi-style docstring generator
+├── validator.py               # Docstring quality validator
 ├── inserter.py                # Docstring insertion logic
 ├── error_detector.py          # Code issue detection
 ├── comment_generator.py       # Inline comment generation
 ├── sample.py                  # Example Python file for testing
 ├── requirements.txt           # Python dependencies
 ├── README.md                  # This file
+├── architecture_diagram.png   # System architecture diagram
 └── .gitignore                 # Git ignore rules
 ```
 
