@@ -21,6 +21,7 @@ Experience the app live without any installation required!
 ### ✨ Key Features
 
 - 🎨 **Multiple Docstring Styles** - Google, NumPy, and reStructuredText (reST)
+- ✅ **Docstring Validation** - Validates generated docstrings for quality, completeness, and PEP 257 compliance
 - 🔍 **Error Detection** - Identifies syntax errors, unused imports, and missing type hints
 - 💬 **Inline Comments** - Automatically adds comments for complex code constructs
 - ✅ **Smart Detection** - Preserves existing docstrings
@@ -59,6 +60,7 @@ graph TB
 | ---------------------------------------------- | ------------------------------------------ | ------------------------------------------------------------- |
 | **Parser** (`parser.py`)                       | Extracts function/class metadata using AST | `parse_python_file()`                                         |
 | **Generator** (`generator.py`)                 | Creates docstrings in multiple styles      | `generate_function_docstring()`, `generate_class_docstring()` |
+| **Validator** (`validator.py`)                 | Validates docstring quality and compliance | `validate_docstring()`, `check_pep257_compliance()`           |
 | **Error Detector** (`error_detector.py`)       | Identifies code issues                     | `detect_issues()`                                             |
 | **Comment Generator** (`comment_generator.py`) | Adds inline comments                       | `generate_inline_comments()`                                  |
 | **Inserter** (`inserter.py`)                   | Combines docstrings into source code       | `insert_docstrings()`                                         |
