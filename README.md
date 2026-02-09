@@ -207,7 +207,7 @@ Automatically adds comments for:
 - Shows "Already documented" status
 - Skips generation for documented items
 
-### 5. Docstring Validation ⭐ NEW
+### 5. Docstring Validation
 
 The validator ensures every generated docstring meets professional standards.
 
@@ -377,6 +377,3 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 For questions or feedback, please open an issue on GitHub.
 
----
-
-**Made with ❤️ for the Python community**
